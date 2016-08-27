@@ -1,0 +1,9 @@
+#MySQL Database settings
+database:
+  username: minecraft
+  password: minecraft
+  host: localhost
+  port: 3306
+  database: mcpony
+  #table prefix
+  prefix: BrohoofWarps_
