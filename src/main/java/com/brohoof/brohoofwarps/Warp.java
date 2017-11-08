@@ -1,8 +1,10 @@
 package com.brohoof.brohoofwarps;
 
+import java.util.ArrayList;
 import java.util.Optional;
 import java.util.UUID;
 
+import org.apache.commons.lang.Validate;
 import org.bukkit.World;
 
 /**
@@ -27,11 +29,15 @@ public class Warp {
     /**
      * An array containing a list of all the UUIDs of people who are allowed to access the warp, if it is private
      */
-    private Invite[] invitees;
+    private ArrayList<UUID> invitees;
     /**
      * The World this warp is located in. If the Optional is empty, the world is not loaded.
      */
     private Optional<World> world;
+    /**
+     * The String name of this world.
+     */
+    private String worldName;
     /**
      * The x component of the warp location.
      */
@@ -55,7 +61,7 @@ public class Warp {
     /**
      * The access modifier to use for this warp. 0 means global, 1 means public, and 2 means private.
      */
-    private int access;
+    private Access access;
 
     /**
      * Creates a new Warp object.
@@ -84,18 +90,19 @@ public class Warp {
      *            The access modifier to use for this warp. 0 means global, 1 means public, and 2 means private.
      */
     // What if instead of having an Optional<World> inside the constructor, we gave it a string, and told it the main thread to get the Optional later?
-    public Warp(String name, String ownerName, UUID owner, Invite[] invitees, String world, final double x, final double y, final double z, final float yaw, final float pitch, int access) {
+    public Warp(String name, String ownerName, UUID owner, ArrayList<UUID> invitees, String world, final double x, final double y, final double z, final float yaw, final float pitch, int access) {
         this.name = name;
         this.ownerName = ownerName;
         this.owner = owner;
         this.invitees = invitees;
+        this.worldName = world;
         this.x = x;
         this.y = y;
         this.z = z;
         this.pitch = pitch;
         this.yaw = yaw;
-        this.access = access;
-        getWorldLater(world);
+        this.access = Access.valueOf(access);
+        this.world = Optional.<World> empty();
     }
 
     /**
@@ -104,7 +111,13 @@ public class Warp {
      * @param worldName
      *            the string name of the world
      */
-    private void getWorldLater(String worldName) {
+    public String getWorldName() {
+    	return worldName;
+    }
+    
+    public void setWorld(Optional<World> world) {
+    	Validate.notNull(world);
+    	this.world = world;
     }
 
     /**
@@ -135,7 +148,7 @@ public class Warp {
      * 
      * @return the invites to this warp
      */
-    public Invite[] getInvitees() {
+    public ArrayList<UUID> getInvitees() {
         return invitees;
     }
 
@@ -193,7 +206,7 @@ public class Warp {
      * 
      * @return The access modifier to use for this warp. 0 means global, 1 means public, and 2 means private.
      */
-    public int getAccess() {
+    public Access getAccess() {
         return access;
     }
 }

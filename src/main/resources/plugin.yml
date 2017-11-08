@@ -1,0 +1,15 @@
+name: BrohoofWarps
+main: com.brohoof.brohoofwarps.BrohoofWarpsPlugin
+version: $version
+authors: [SweetieBelle, Princess_Luna]
+description: >
+             Brohoof updated fork of xWarp.
+             
+commands:
+   warp:
+      description: Core command for MCProfiler. Use /MCProfiler help for info
+      usage: /<command> <arguments>
+      aliases: [w]
+permissions:
+    warp.invite.override:
+      description: Allows users to warp to any private warp.

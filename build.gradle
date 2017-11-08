@@ -1,0 +1,33 @@
+plugins {
+	id 'java'
+	id 'eclipse'
+}
+
+group = 'com.brohoof'
+version = '1'
+
+repositories {
+	jcenter()
+	maven {
+		name 'sponge'
+		url 'https://repo.spongepowered.org/maven'
+	}
+	maven {
+		name 'spigot'
+		url 'https://hub.spigotmc.org/nexus/content/groups/public/'
+	}
+}
+dependencies {
+	compile 'org.spigotmc:spigot-api:1.11.2-R0.1-SNAPSHOT'
+}
+
+processResources {
+	inputs.properties version: project.version
+	from (sourceSets.main.resources.srcDirs) {
+		include 'plugin.yml'
+		expand version:project.version
+	}
+	from (sourceSets.main.resources.srcDirs) {
+		exclude 'plugin.yml'
+	}
+}
